@@ -260,7 +260,7 @@ Pre-designed diagrams in multiple formats:
 
 ### Project Management
 
-- **Jira Kanban Board** - `jira-kanban.png` (Sprint planning visualization)
+- **Jira Kanban Board** - `jira-kanban.png` (planning visualization)
 
 📖 **See `diagrams (jira_lucidchart_EA)/README.md` for detailed import instructions and diagram documentation.**
 
