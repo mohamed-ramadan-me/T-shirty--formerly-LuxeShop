@@ -32,10 +32,11 @@ A production-ready e-commerce application built with React and Node.js, featurin
 
 ### Installation
 
-1. **Clone or download the project**
+1. **Clone the repository**
 
    ```bash
-   cd "c:\Users\BabaBoy_99\Desktop\LuxeShop_E-commerce platform Project"
+   git clone https://github.com/mohamed-ramadan-me/LuxeShop.git
+   cd LuxeShop
    ```
 
 2. **Install backend dependencies**
