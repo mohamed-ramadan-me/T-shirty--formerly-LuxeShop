@@ -1,0 +1,336 @@
+<mxfile host="app.diagrams.net" modified="2025-11-23T10:34:55.000Z" agent="LuxeShop UML Generator" version="22.1.0" etag="drawio">
+  <diagram name="LuxeShop Activity Diagram - Shopping Flow" id="luxeshop-activity">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="LuxeShop E-Commerce - Complete Shopping Workflow" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Swimlanes -->
+        <mxCell id="lane-user" value="User" style="swimlane;html=1;startSize=40;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="420" height="1680" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="lane-system" value="System" style="swimlane;html=1;startSize=40;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="480" height="1680" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="lane-database" value="Database" style="swimlane;html=1;startSize=40;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="80" width="420" height="1680" as="geometry" />
+        </mxCell>
+        
+        <!-- Initial State -->
+        <mxCell id="start" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="lane-user">
+          <mxGeometry x="190" y="60" width="40" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- User Actions -->
+        <mxCell id="action-visit" value="Visit Website" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="130" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow1" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="lane-user" source="start" target="action-visit">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-browse" value="Browse Products" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="280" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="decision-login" value="Logged In?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="145" y="460" width="130" height="130" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-login-register" value="Login / Register" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="660" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-select-product" value="Select Product &amp;&amp;\nAdd to Cart" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="780" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="decision-continue" value="Continue\nShopping?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="145" y="950" width="130" height="130" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-view-cart" value="View Cart" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="1150" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-checkout" value="Proceed to Checkout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="1260" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-shipping" value="Enter Shipping\nInformation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="1370" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-payment" value="Select Payment\nMethod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="1480" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="action-confirm" value="Confirm &amp;&amp;\nPlace Order" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="lane-user">
+          <mxGeometry x="130" y="1590" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- System Actions -->
+        <mxCell id="sys-load-home" value="Load Home Page" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="130" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-get-products" value="Fetch Products" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="210" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-display-products" value="Display Product List\n(with Filters)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="280" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-check-auth" value="Check Authentication\n(JWT Token)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="380" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-validate-creds" value="Validate Credentials\n(bcrypt)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="660" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-generate-token" value="Generate JWT Token" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="730" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-add-cart" value="Add Item to Cart\n(Update Quantity)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="850" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-calc-total" value="Calculate Cart Total\n(Subtotal + Tax)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="920" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-get-cart" value="Retrieve Cart Items" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="1150" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-validate-form" value="Validate Shipping\nInformation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="1370" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-process-payment" value="Process Payment\nMethod Selection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="1480" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="sys-create-order" value="Create Order\n(Generate Order ID)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="lane-system">
+          <mxGeometry x="160" y="1590" width="160" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Database Actions -->
+        <mxCell id="db-query-products" value="Query Products Table" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="210" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="db-verify-user" value="Verify User\nCredentials" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="650" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="db-save-token" value="Store JWT Token" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="730" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="db-update-cart" value="Update Cart Table" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="850" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="db-get-cart" value="Retrieve Cart Data" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="1135" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="db-save-order" value="Save Order to\nOrders Table" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="1580" width="150" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="db-clear-cart" value="Clear User Cart" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="lane-database">
+          <mxGeometry x="135" y="1480" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Final State -->
+        <mxCell id="end" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="230" y="1730" width="40" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Flows between User and System -->
+        <mxCell id="flow-visit" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-visit" target="sys-load-home">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-browse" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-browse" target="sys-display-products">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-login-req" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-login-register" target="sys-validate-creds">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-add-cart-req" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-select-product" target="sys-add-cart">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-view-cart-req" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-view-cart" target="sys-get-cart">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-shipping-req" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-shipping" target="sys-validate-form">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-payment-req" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-payment" target="sys-process-payment">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-confirm-req" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-confirm" target="sys-create-order">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Flows between System and Database -->
+        <mxCell id="flow-db-products" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sys-get-products" target="db-query-products">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-db-verify" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sys-validate-creds" target="db-verify-user">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-db-token" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sys-generate-token" target="db-save-token">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-db-cart" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sys-add-cart" target="db-update-cart">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-db-getcart" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sys-get-cart" target="db-get-cart">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-db-order" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;dashed=1;" edge="1" parent="1" source="sys-create-order" target="db-save-order">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Internal User Lane Flows -->
+        <mxCell id="flow2" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-visit" target="action-browse">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow3" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-browse" target="sys-check-auth">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow4" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="sys-check-auth" target="decision-login">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-no" value="No" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=12;fontStyle=1;" edge="1" parent="1" source="decision-login" target="action-login-register">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow-yes" value="Yes" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=12;fontStyle=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="decision-login" target="action-select-product">
+          <mxGeometry x="-0.5" y="10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="330" y="645" />
+              <mxPoint x="330" y="925" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow5" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-login-register" target="sys-validate-creds">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow6" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="sys-validate-creds" target="sys-generate-token">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow7" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="db-save-token" target="action-select-product">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow8" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-select-product" target="sys-add-cart">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow9" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="sys-add-cart" target="sys-calc-total">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow10" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="sys-calc-total" target="decision-continue">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-continue-yes" value="Yes" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=2;fontSize=12;fontStyle=1;edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="decision-continue" target="action-browse">
+          <mxGeometry x="-0.8" y="-10" relative="1" as="geometry">
+            <mxPoint x="80" y="425" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="80" y="1135" />
+              <mxPoint x="80" y="425" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow-continue-no" value="No" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=12;fontStyle=1;" edge="1" parent="1" source="decision-continue" target="action-view-cart">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="flow11" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-view-cart" target="action-checkout">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow12" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-checkout" target="action-shipping">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow13" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-shipping" target="action-payment">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow14" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-payment" target="sys-process-payment">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow15" value="" style="endArrow=classic;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;dashed=1;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="db-clear-cart" target="action-confirm">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow16" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="action-confirm" target="end">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- System internal flows -->
+        <mxCell id="flow-sys1" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="sys-load-home" target="sys-get-products">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-sys2" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="sys-get-products" target="sys-display-products">
+          <mxGeometry width="50" height="50" relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="flow-sys-clear" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="sys-process-payment" target="db-clear-cart">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="1560" />
+              <mxPoint x="1150" y="1560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
