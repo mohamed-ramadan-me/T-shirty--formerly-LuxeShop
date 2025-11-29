@@ -116,7 +116,7 @@ T-shirty_E-commerce platform Project/
 │   ├── index.html                  # HTML template
 │   └── node_modules/               # Frontend dependencies (npm install)
 └── diagrams (jira_lucidchart_EA)/  # UML diagrams and EA project
-    ├── T-shirty.qea                # Enterprise Architect project file (legacy name)
+    ├── T-shirty.qea                # Enterprise Architect project file
     ├── README.md                   # Diagrams documentation
     ├── class_diagram(EA).js        # Class diagram generator
     ├── system_arch(EA).js          # System architecture generator
@@ -253,7 +253,7 @@ The `diagrams (jira_lucidchart_EA)/` folder contains comprehensive UML documenta
 
 ### Enterprise Architect Project File
 
-**T-shirty.qea** (legacy filename) - Complete Enterprise Architect project ( 1.7 MB)
+**T-shirty.qea** - Complete Enterprise Architect project (1.7 MB)
 
 - Pre-built EA project with all diagrams ready to open
 - Includes class diagrams, sequence diagrams, and system architecture
