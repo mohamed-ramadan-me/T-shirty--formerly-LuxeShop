@@ -87,7 +87,8 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     padding: 1.5rem;
-    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     box-shadow: var(--shadow-lg);
     z-index: 2;
 }
