@@ -3,7 +3,7 @@ import { authService } from '../services/api';
 import './Auth.css';
 
 const Auth = () => {
-  
+
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -38,9 +38,9 @@ const Auth = () => {
                 // Success: Save token and user data
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('user', JSON.stringify(response.user));
-                
+
                 // Optional: Force a window reload or use a Context to update header state immediately
-                window.location.href = '/'; 
+                window.location.href = '/';
             } else {
                 // Handle API-returned errors (like "User already exists")
                 setError(response.error || 'Authentication failed');
@@ -59,7 +59,7 @@ const Auth = () => {
             <div className="auth-container">
                 <div className="auth-visual">
                     <div className="visual-content">
-                        <h1 className="visual-title gradient-text">LuxeShop</h1>
+                        <h1 className="visual-title gradient-text">T-shirty</h1>
                         <p className="visual-subtitle">
                             Your premium destination for quality products and exceptional shopping experience
                         </p>

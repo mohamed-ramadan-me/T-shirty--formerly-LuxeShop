@@ -35,7 +35,7 @@ const Navbar = ({ cartCount = 0 }) => {
                                 </defs>
                             </svg>
                         </div>
-                        <span className="logo-text gradient-text">LuxeShop</span>
+                        <span className="logo-text gradient-text">T-shirty</span>
                     </Link>
 
                     <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>

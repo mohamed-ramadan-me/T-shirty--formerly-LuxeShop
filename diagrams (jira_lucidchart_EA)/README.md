@@ -1,6 +1,6 @@
-# LuxeShop - UML Diagrams & Documentation
+# T-shirty - UML Diagrams & Documentation
 
-Complete UML documentation for the LuxeShop E-Commerce Platform, including Enterprise Architect project, JavaScript generators, and Lucidchart diagrams.
+Complete UML documentation for the T-shirty E-Commerce Platform, including Enterprise Architect project, JavaScript generators, and Lucidchart diagrams.
 
 ---
 
@@ -11,7 +11,7 @@ Complete UML documentation for the LuxeShop E-Commerce Platform, including Enter
 **Fastest way to view all diagrams:**
 
 1. Open **Enterprise Architect** (version 7.0+)
-2. Open file: `LuxeShop.qea`
+2. Open file: `LuxeShop.qea` (legacy filename - contains T-shirty diagrams)
 3. All diagrams are ready to view in the project browser
 
 ### Option 2: Use JavaScript Generators
@@ -31,7 +31,7 @@ Import diagram generators into an existing EA project:
 
 | File | Size | Description |
 |------|------|-------------|
-| **LuxeShop.qea** | 1.7 MB | Complete EA project with all UML diagrams |
+| **LuxeShop.qea** | 1.7 MB | Complete EA project with all UML diagrams (legacy filename) |
 
 ### EA Diagram Generators (JavaScript)
 
@@ -184,7 +184,7 @@ Each JavaScript file can be run in Enterprise Architect to generate diagrams:
 
 ### Import Notes
 
-- **LuxeShop.qea**: Open directly in EA, no import needed
+- **LuxeShop.qea** (legacy filename): Open directly in EA, no import needed
 - **JavaScript files**: Run as scripts in EA to generate diagrams
 - **XML files**: Import via `Import Package from XMI` in EA or Lucidchart
 - **PDF/PNG files**: View directly, no import needed
@@ -212,8 +212,8 @@ A: Yes, open LuxeShop.qea in EA and modify as needed
 - **Created**: 2025-11-23
 - **Format**: XMI 1.1 (UML 1.3)
 - **EA Compatibility**: 7.0+
-- **Project**: LuxeShop E-Commerce Platform
+- **Project**: T-shirty E-Commerce Platform
 
 ---
 
-**Ready to explore?** Open `LuxeShop.qea` in Enterprise Architect to view all diagrams instantly! 🎨
+**Ready to explore?** Open `LuxeShop.qea` (legacy filename) in Enterprise Architect to view all T-shirty diagrams instantly! 🎨

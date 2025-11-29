@@ -1,20 +1,24 @@
-# LuxeShop - E-Commerce Platform
+# T-shirty - E-Commerce Platform
 
 A production-ready e-commerce application built with React and Node.js, featuring a unified API architecture and comprehensive admin dashboard.
 
 [![React](https://img.shields.io/badge/React-19.2-blue)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-16%2B-green)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22%2B-green)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-5.1-lightgrey)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)](https://www.mongodb.com/)
+[![Mongoose](https://img.shields.io/badge/Mongoose-8.0-red)](https://mongoosejs.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
 ## Overview
 
-**LuxeShop** is a full-featured e-commerce platform with 9 pages, 21 API actions, and 12 pre-loaded products across 5 categories. Built with modern web technologies and a premium dark theme UI.
+**T-shirty (formerly LuxeShop)** is a full-featured e-commerce platform with 9 pages, **25 API actions**, and 24 pre-loaded products across 6 categories. Built with modern web technologies and a premium dark theme UI.
 
 ### Key Features
 
 - **Single API Endpoint** - All operations through `/api` with action-based routing
+- **User Profile** - Complete user profile management with `getUserProfile` endpoint
 - **Admin Dashboard** - Complete store management (orders, products, analytics)
 - **Authentication** - JWT-based with role-based access control
 - **Responsive Design** - Glassmorphism effects, smooth animations, mobile-first
@@ -35,8 +39,8 @@ A production-ready e-commerce application built with React and Node.js, featurin
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/mohamed-ramadan-me/LuxeShop.git
-   cd LuxeShop
+   git clone https://github.com/mohamed-ramadan-me/T-shirty--formerly-LuxeShop.git
+   cd T-shirty--formerly-LuxeShop
    ```
 
 2. **Install backend dependencies**
@@ -46,14 +50,33 @@ A production-ready e-commerce application built with React and Node.js, featurin
    npm install
    ```
 
-3. **Install frontend dependencies**
+3. **Configure environment variables**
+
+   Create a `.env` file in the `backend/` directory:
+
+   ```bash
+   cd backend
+   touch .env
+   ```
+
+   Add your MongoDB connection string:
+
+   ```env
+   MONGO_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   PORT=5000
+   ```
+
+   > 💡 **Note:** Get your MongoDB URI from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) or use a local MongoDB instance.
+
+4. **Install frontend dependencies**
 
    ```bash
    cd ../frontend
    npm install
    ```
 
-4. **Start the backend server**
+5. **Start the backend server**
 
    ```bash
    cd ../backend
@@ -62,7 +85,7 @@ A production-ready e-commerce application built with React and Node.js, featurin
 
    Server runs on: `http://localhost:5000`
 
-5. **Start the frontend (new terminal)**
+6. **Start the frontend (new terminal)**
 
    ```bash
    cd frontend
@@ -71,13 +94,13 @@ A production-ready e-commerce application built with React and Node.js, featurin
 
    Frontend runs on: `http://localhost:5173`
 
-6. **Open in browser**
+7. **Open in browser**
    Navigate to `http://localhost:5173`
 
 ## Project Structure
 
 ```
-LuxeShop_E-commerce platform Project/
+T-shirty_E-commerce platform Project/
 ├── README.md                       # Project documentation
 ├── backend/                        # Backend API server
 │   ├── server.js                   # Express server with API endpoints
@@ -93,7 +116,7 @@ LuxeShop_E-commerce platform Project/
 │   ├── index.html                  # HTML template
 │   └── node_modules/               # Frontend dependencies (npm install)
 └── diagrams (jira_lucidchart_EA)/  # UML diagrams and EA project
-    ├── LuxeShop.qea                # Enterprise Architect project file
+    ├── T-shirty.qea                # Enterprise Architect project file (legacy name)
     ├── README.md                   # Diagrams documentation
     ├── class_diagram(EA).js        # Class diagram generator
     ├── system_arch(EA).js          # System architecture generator
@@ -124,12 +147,12 @@ All requests: `POST http://localhost:5000/api`
 | Category       | Actions |
 |----------------|---------|
 | **Auth**       | `register`, `login`, `getUserProfile` |
-| **Products**   | `getProducts`, `getProduct`, `getCategories`, `updateProduct` (admin) |
+| **Products**   | `getProducts`, `getProduct`, `getCategories` |
 | **Cart**       | `addToCart`, `getCart`, `updateCartItem`, `removeFromCart` |
-| **Orders**     | `createOrder`, `getOrders`, `getOrder`, `getAllOrders` (admin), `updateOrderStatus` (admin) |
+| **Orders**     | `createOrder`, `getOrders`, `getOrder` |
 | **Wishlist**   | `addToWishlist`, `removeFromWishlist` |
 | **Reviews**    | `addReview` |
-| **Admin**      | `getDashboardStats`, `getAllUsers` |
+| **Admin**      | `getDashboardStats`, `getAllUsers`, `getAllOrders`, `updateOrderStatus`, `updateProduct`, `addProduct`, `deleteProduct` |
 
 ### Quick Examples
 
@@ -198,16 +221,16 @@ const callAPI = async (action, data = {}) => {
 
 ### Credentials
 
-- **Email:** `admin@luxeshop.com`
-- **Password:** `admin123`
+- **Email:** `admin@gmail.com`
+- **Password:** `asdasd`
 
 ### Features
 
 | Feature         | Description |
 |-----------------|-------------|
-| Overview        | Revenue, orders, users, products analytics |
+| Overview        | Revenue, orders, users (role-based count), products analytics |
 | Orders          | View, filter, and update order statuses |
-| Products        | Edit product details, update stock, manage catalog |
+| Products        | Add new products, edit details, delete products, manage catalog |
 
 **Access:** Navigate to `/admin` after logging in with admin credentials.
 
@@ -230,7 +253,7 @@ The `diagrams (jira_lucidchart_EA)/` folder contains comprehensive UML documenta
 
 ### Enterprise Architect Project File
 
-**LuxeShop.qea** - Complete Enterprise Architect project (1.7 MB)
+**T-shirty.qea** (legacy filename) - Complete Enterprise Architect project ( 1.7 MB)
 
 - Pre-built EA project with all diagrams ready to open
 - Includes class diagrams, sequence diagrams, and system architecture
@@ -278,6 +301,32 @@ Pre-designed diagrams in multiple formats:
 7. **Auth** - Login/Register
 8. **Admin Dashboard** - Store management (orders, products, analytics)
 9. **Profile** - User account details and preferences
+
+---
+
+## Environment Variables
+
+### Backend Configuration
+
+Create a `.env` file in the `backend/` directory with the following variables:
+
+```env
+# Database
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/luxeshop
+
+# Authentication
+JWT_SECRET=your_super_secret_jwt_key_change_in_production
+
+# Server
+PORT=5000
+```
+
+### Security Notes
+
+- ✅ `.env` file is gitignored by default
+- ⚠️ Never commit `.env` to version control
+- 🔒 Use strong, unique secrets in production
+- 📝 Share `.env.example` template with your team
 
 ---
 
@@ -373,4 +422,35 @@ Contributions, issues, and feature requests are welcome!
 
 ---
 
-**Built with ❤️ using React and Node.js**
+## Changelog
+
+### Version 2.1.0 - Enhanced Admin Features (2025-11-29)
+
+**New Features:**
+
+- ✨ Add Product: Admins can create new products via dashboard
+- 🗑️ Delete Product: Remove products with confirmation dialog
+- 📊 User Count: Dashboard now shows only users with 'user' role (excludes admins)
+- 🔒 Environment Variables: Secure configuration with `.env` support
+- 📝 Updated API count: 25 total API actions
+
+**Security Improvements:**
+
+- Environment variables for sensitive data (MongoDB URI, JWT secret)
+- `.gitignore` configured to exclude `.env` files
+- Improved admin role-based access control
+
+### Version 2.0.0 - T-shirty Rebranding (2025-11-29)
+
+**Breaking Changes:**
+
+- Database name remains `luxeshop` for backward compatibility
+
+**Admin Credentials:**
+
+- Email: `admin@gmail.com`
+- Password: `asdasd`
+
+---
+
+**Built with ❤️ using MERN stack**

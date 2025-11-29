@@ -20,6 +20,18 @@ const AdminDashboard = () => {
     const [editingProduct, setEditingProduct] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
 
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [newProduct, setNewProduct] = useState({
+        name: '',
+        price: 0,
+        category: 'Basic',
+        image: '',
+        description: '',
+        stock: 0,
+        rating: 4.5,
+        reviews: 0
+    });
+
     useEffect(() => {
         const user = authService.getCurrentUser();
         if (!user || user.role !== 'admin') {
@@ -97,9 +109,9 @@ const AdminDashboard = () => {
             // IMPORTANT: Map _id to id for the backend
             const payload = {
                 ...editingProduct,
-                id: editingProduct._id 
+                id: editingProduct._id
             };
-            
+
             await adminService.updateProduct(payload);
             setShowEditModal(false);
             setEditingProduct(null);
@@ -119,6 +131,52 @@ const AdminDashboard = () => {
                 ? parseFloat(value) || 0
                 : value
         }));
+    };
+
+    const handleNewProductChange = (field, value) => {
+        setNewProduct(prev => ({
+            ...prev,
+            [field]: field === 'price' || field === 'stock' || field === 'rating' || field === 'reviews'
+                ? parseFloat(value) || 0
+                : value
+        }));
+    };
+
+    const handleAddProduct = async () => {
+        try {
+            await adminService.addProduct(newProduct);
+            setShowAddModal(false);
+            setNewProduct({
+                name: '',
+                price: 0,
+                category: 'Basic',
+                image: '',
+                description: '',
+                stock: 0,
+                rating: 4.5,
+                reviews: 0
+            });
+            loadAllProducts();
+            loadDashboardStats();
+            alert('Product added successfully!');
+        } catch (error) {
+            console.error('Error adding product:', error);
+            alert('Failed to add product');
+        }
+    };
+
+    const handleDeleteProduct = async (productId, productName) => {
+        if (window.confirm(`Are you sure you want to delete "${productName}"?`)) {
+            try {
+                await adminService.deleteProduct(productId);
+                loadAllProducts();
+                loadDashboardStats();
+                alert('Product deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Failed to delete product');
+            }
+        }
     };
 
     const getFilteredOrders = () => {
@@ -324,6 +382,12 @@ const AdminDashboard = () => {
                     <div className="dashboard-content animate-fade-in">
                         <div className="management-header">
                             <h2>Products Management</h2>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => setShowAddModal(true)}
+                            >
+                                ➕ Add New Product
+                            </button>
                         </div>
 
                         {productsLoading ? (
@@ -352,6 +416,13 @@ const AdminDashboard = () => {
                                             >
                                                 Edit Product
                                             </button>
+                                            <button
+                                                className="btn btn-secondary btn-delete"
+                                                onClick={() => handleDeleteProduct(product._id, product.name)}
+                                                style={{ marginTop: '10px' }}
+                                            >
+                                                🗑️ Delete Product
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
@@ -360,6 +431,94 @@ const AdminDashboard = () => {
                     </div>
                 )}
             </div>
+
+            {/* Add Product Modal */}
+            {showAddModal && (
+                <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2>Add New Product</h2>
+                            <button className="modal-close" onClick={() => setShowAddModal(false)}>✕</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label>Product Name</label>
+                                <input
+                                    type="text"
+                                    className="input"
+                                    value={newProduct.name}
+                                    onChange={(e) => handleNewProductChange('name', e.target.value)}
+                                    placeholder="Enter product name"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Description</label>
+                                <textarea
+                                    className="input"
+                                    rows="3"
+                                    value={newProduct.description}
+                                    onChange={(e) => handleNewProductChange('description', e.target.value)}
+                                    placeholder="Enter product description"
+                                />
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label>Price ($)</label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        className="input"
+                                        value={newProduct.price}
+                                        onChange={(e) => handleNewProductChange('price', e.target.value)}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label>Stock</label>
+                                    <input
+                                        type="number"
+                                        className="input"
+                                        value={newProduct.stock}
+                                        onChange={(e) => handleNewProductChange('stock', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Category</label>
+                                <select
+                                    className="input"
+                                    value={newProduct.category}
+                                    onChange={(e) => handleNewProductChange('category', e.target.value)}
+                                >
+                                    <option value="Basic">Basic</option>
+                                    <option value="Premium">Premium</option>
+                                    <option value="Graphic">Graphic</option>
+                                    <option value="Vintage">Vintage</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Oversized">Oversized</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Image URL</label>
+                                <input
+                                    type="text"
+                                    className="input"
+                                    value={newProduct.image}
+                                    onChange={(e) => handleNewProductChange('image', e.target.value)}
+                                    placeholder="https://images.unsplash.com/..."
+                                />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowAddModal(false)}>
+                                Cancel
+                            </button>
+                            <button className="btn btn-primary" onClick={handleAddProduct}>
+                                Add Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Edit Product Modal */}
             {showEditModal && editingProduct && (
@@ -418,6 +577,10 @@ const AdminDashboard = () => {
                                 >
                                     <option value="Basic">Basic</option>
                                     <option value="Premium">Premium</option>
+                                    <option value="Graphic">Graphic</option>
+                                    <option value="Vintage">Vintage</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Oversized">Oversized</option>
                                 </select>
                             </div>
                             <div className="form-group">
@@ -445,4 +608,4 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+export default AdminDashboard; 

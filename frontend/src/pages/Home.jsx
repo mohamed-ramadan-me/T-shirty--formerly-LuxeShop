@@ -53,15 +53,15 @@ const Home = ({ onCartUpdate }) => {
 
                         <div className="hero-stats">
                             <div className="stat-item">
-                                <div className="stat-value">12+</div>
+                                <div className="stat-value">24+</div>
                                 <div className="stat-label">Unique Styles</div>
                             </div>
                             <div className="stat-item">
-                                <div className="stat-value">5K+</div>
+                                <div className="stat-value">10K+</div>
                                 <div className="stat-label">Happy Customers</div>
                             </div>
                             <div className="stat-item">
-                                <div className="stat-value">4.7★</div>
+                                <div className="stat-value">4.8★</div>
                                 <div className="stat-label">Average Rating</div>
                             </div>
                         </div>
@@ -166,10 +166,10 @@ const Home = ({ onCartUpdate }) => {
                         <div className="grid grid-3">
                             {featuredProducts.map((product) => (
                                 // CRITICAL CHANGE: Use product._id here
-                                <ProductCard 
-                                    key={product._id} 
-                                    product={product} 
-                                    onAddToCart={onCartUpdate} 
+                                <ProductCard
+                                    key={product._id}
+                                    product={product}
+                                    onAddToCart={onCartUpdate}
                                 />
                             ))}
                         </div>

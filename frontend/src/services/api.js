@@ -26,15 +26,15 @@ const callAPI = async (action, data = {}) => {
     try {
         // This matches the unified endpoint structure: { action, data }
         const response = await api.post('/api', { action, data });
-        
+
         // Return the whole response (success, data, error)
         return response.data;
     } catch (error) {
         console.error(`API Error (${action}):`, error);
-        
+
         // Handle Axios errors (4xx, 5xx) vs Network errors
         if (error.response && error.response.data) {
-             // Return the error message from backend so UI can show it
+            // Return the error message from backend so UI can show it
             return { success: false, error: error.response.data.error };
         }
         return { success: false, error: 'Network error or server unreachable' };
@@ -99,6 +99,8 @@ export const adminService = {
     getAllOrders: () => callAPI('getAllOrders'),
     updateOrderStatus: (orderId, status) => callAPI('updateOrderStatus', { orderId, status }),
     updateProduct: (productData) => callAPI('updateProduct', productData),
+    addProduct: (productData) => callAPI('addProduct', productData),
+    deleteProduct: (productId) => callAPI('deleteProduct', { id: productId }),
 };
 
 // Profile Services
