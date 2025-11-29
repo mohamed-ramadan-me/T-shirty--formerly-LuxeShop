@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { orderService } from '../services/api';
+import { orderService, cartService } from '../services/api';
 import './Checkout.css';
 
 const Checkout = ({ onCartUpdate }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [cartTotal, setCartTotal] = useState(0);
+    const [cartCount, setCartCount] = useState(0);
+    
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -16,6 +19,23 @@ const Checkout = ({ onCartUpdate }) => {
         paymentMethod: 'credit-card'
     });
 
+    // Fetch cart data to display summary
+    useEffect(() => {
+        const loadCartSummary = async () => {
+            try {
+                const res = await cartService.getCart();
+                if (res.success) {
+                    const total = res.cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+                    setCartTotal(total);
+                    setCartCount(res.cart.length);
+                }
+            } catch (error) {
+                console.error("Could not load cart summary");
+            }
+        };
+        loadCartSummary();
+    }, []);
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -25,26 +45,25 @@ const Checkout = ({ onCartUpdate }) => {
         setLoading(true);
 
         try {
-            const shippingAddress = {
-                fullName: formData.fullName,
-                address: formData.address,
-                city: formData.city,
-                zipCode: formData.zipCode,
-                country: formData.country
-            };
+            // CRITICAL FIX: Format address as a string for the backend Schema
+            const formattedAddress = `${formData.fullName}, ${formData.address}, ${formData.city}, ${formData.zipCode}, ${formData.country}`;
 
-            await orderService.createOrder({
-                shippingAddress,
+            const response = await orderService.createOrder({
+                shippingAddress: formattedAddress,
                 paymentMethod: formData.paymentMethod
             });
 
-            // Update cart count after successful order
-            if (onCartUpdate) onCartUpdate();
-
-            navigate('/orders?success=true');
+            if (response.success) {
+                // Update global cart state
+                if (onCartUpdate) onCartUpdate();
+                // Navigate to orders page
+                navigate('/orders?success=true');
+            } else {
+                alert(response.error || 'Failed to create order');
+            }
         } catch (error) {
             console.error('Error creating order:', error);
-            alert('Failed to create order. Please try again.');
+            alert('An unexpected error occurred.');
         } finally {
             setLoading(false);
         }
@@ -150,7 +169,7 @@ const Checkout = ({ onCartUpdate }) => {
                                     <div className="payment-option-content">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-                                            <line x1="1" y1="10" x2="23" y2="10" />
+                                            <line x1="1" y="10" x2="23" y2="10" />
                                         </svg>
                                         <span>Credit Card</span>
                                     </div>
@@ -200,7 +219,7 @@ const Checkout = ({ onCartUpdate }) => {
                                 </>
                             ) : (
                                 <>
-                                    Place Order
+                                    Place Order (${(cartTotal * 1.1).toFixed(2)})
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <polyline points="20 6 9 17 4 12" />
                                     </svg>
@@ -212,7 +231,21 @@ const Checkout = ({ onCartUpdate }) => {
                     <div className="order-summary-sidebar">
                         <div className="card glass">
                             <h3 className="summary-title">Order Summary</h3>
-                            <p className="summary-note">
+                            
+                            <div className="summary-row">
+                                <span>Items ({cartCount})</span>
+                                <span>${cartTotal.toFixed(2)}</span>
+                            </div>
+                            <div className="summary-row">
+                                <span>Tax (10%)</span>
+                                <span>${(cartTotal * 0.1).toFixed(2)}</span>
+                            </div>
+                            <div className="summary-row" style={{fontWeight: 'bold', marginTop: '10px', borderTop: '1px solid #eee', paddingTop: '10px'}}>
+                                <span>Total</span>
+                                <span>${(cartTotal * 1.1).toFixed(2)}</span>
+                            </div>
+
+                            <p className="summary-note" style={{marginTop: '20px'}}>
                                 Review your cart before placing the order
                             </p>
                             <button className="btn btn-ghost" onClick={() => navigate('/cart')}>

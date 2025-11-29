@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
 import './Auth.css';
 
 const Auth = () => {
-    const navigate = useNavigate();
+  
     const [isLogin, setIsLogin] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -35,11 +34,21 @@ const Auth = () => {
                 response = await authService.register(formData);
             }
 
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('user', JSON.stringify(response.user));
-            navigate('/');
+            if (response.success) {
+                // Success: Save token and user data
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('user', JSON.stringify(response.user));
+                
+                // Optional: Force a window reload or use a Context to update header state immediately
+                window.location.href = '/'; 
+            } else {
+                // Handle API-returned errors (like "User already exists")
+                setError(response.error || 'Authentication failed');
+            }
+
         } catch (err) {
-            setError(err.error || 'An error occurred');
+            console.error("Auth Error:", err);
+            setError(err.error || 'An unexpected error occurred');
         } finally {
             setLoading(false);
         }

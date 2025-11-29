@@ -17,12 +17,16 @@ const Orders = () => {
     const loadOrders = async () => {
         try {
             const response = await orderService.getOrders();
-            setOrders(response.orders);
+            if (response.success) {
+                setOrders(response.orders);
+            } else {
+                // Handle API errors (like expired token)
+                if (response.error && (response.error.includes('token') || response.error.includes('Auth'))) {
+                    navigate('/login');
+                }
+            }
         } catch (error) {
             console.error('Error loading orders:', error);
-            if (error.error === 'Authentication required') {
-                navigate('/login');
-            }
         } finally {
             setLoading(false);
         }
@@ -41,7 +45,7 @@ const Orders = () => {
         return (
             <div className="orders-page">
                 <div className="container">
-                    <div className="skeleton" style={{ height: '400px' }}></div>
+                    <div className="skeleton" style={{ height: '400px' }}>Loading orders...</div>
                 </div>
             </div>
         );
@@ -64,7 +68,7 @@ const Orders = () => {
                     </div>
                 )}
 
-                {orders.length === 0 ? (
+                {!orders || orders.length === 0 ? (
                     <div className="empty-orders">
                         <div className="empty-icon">
                             <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -80,10 +84,12 @@ const Orders = () => {
                 ) : (
                     <div className="orders-list">
                         {orders.map((order) => (
-                            <div key={order.id} className="order-card card animate-fade-in">
+                            // CRITICAL CHANGE: Use order._id here
+                            <div key={order._id} className="order-card card animate-fade-in">
                                 <div className="order-header">
                                     <div className="order-info">
-                                        <h3 className="order-id">Order #{order.id}</h3>
+                                        {/* Display a cleaner, shorter ID */}
+                                        <h3 className="order-id">Order #{order._id.slice(-6)}</h3>
                                         <p className="order-date">{formatDate(order.createdAt)}</p>
                                     </div>
                                     <div className="order-status">
@@ -114,8 +120,9 @@ const Orders = () => {
                                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                             <circle cx="12" cy="10" r="3" />
                                         </svg>
+                                        {/* CRITICAL CHANGE: Display address string directly */}
                                         <span>
-                                            {order.shippingAddress.address}, {order.shippingAddress.city}
+                                            {order.shippingAddress}
                                         </span>
                                     </div>
                                     <div className="order-total">

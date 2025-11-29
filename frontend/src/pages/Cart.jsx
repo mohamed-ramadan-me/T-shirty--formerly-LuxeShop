@@ -15,11 +15,14 @@ const Cart = ({ onCartUpdate }) => {
     const loadCart = async () => {
         try {
             const response = await cartService.getCart();
-            setCart(response.cart);
-            if (onCartUpdate) onCartUpdate();
+            if (response.success) {
+                setCart(response.cart);
+                if (onCartUpdate) onCartUpdate();
+            }
         } catch (error) {
             console.error('Error loading cart:', error);
-            if (error.error === 'Authentication required') {
+            // Check based on how your api.js returns errors
+            if (error.error === 'Authentication required' || error.error === 'Auth required') {
                 navigate('/login');
             }
         } finally {
@@ -30,6 +33,7 @@ const Cart = ({ onCartUpdate }) => {
     const updateQuantity = async (cartItemId, newQuantity) => {
         if (newQuantity < 1) return;
         try {
+            // cartItemId corresponds to the MongoDB _id of the cart entry
             await cartService.updateCartItem(cartItemId, newQuantity);
             loadCart();
         } catch (error) {
@@ -47,7 +51,11 @@ const Cart = ({ onCartUpdate }) => {
     };
 
     const getTotal = () => {
-        return cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+        return cart.reduce((sum, item) => {
+            // Safety check in case product was deleted but remains in cart
+            if (!item.product) return sum; 
+            return sum + (item.product.price * item.quantity);
+        }, 0);
     };
 
     const handleCheckout = () => {
@@ -58,7 +66,7 @@ const Cart = ({ onCartUpdate }) => {
         return (
             <div className="cart-page">
                 <div className="container">
-                    <div className="skeleton" style={{ height: '400px' }}></div>
+                    <div className="skeleton" style={{ height: '400px' }}>Loading Cart...</div>
                 </div>
             </div>
         );
@@ -95,7 +103,8 @@ const Cart = ({ onCartUpdate }) => {
                 <div className="cart-layout">
                     <div className="cart-items">
                         {cart.map((item) => (
-                            <div key={item.id} className="cart-item card animate-fade-in">
+                            // CRITICAL CHANGE: Use item._id (MongoDB ID)
+                            <div key={item._id} className="cart-item card animate-fade-in">
                                 <img src={item.product.image} alt={item.product.name} className="cart-item-image" />
 
                                 <div className="cart-item-details">
@@ -110,7 +119,8 @@ const Cart = ({ onCartUpdate }) => {
                                     <div className="quantity-control">
                                         <button
                                             className="quantity-btn"
-                                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                            // CRITICAL CHANGE: Pass item._id
+                                            onClick={() => updateQuantity(item._id, item.quantity - 1)}
                                             disabled={item.quantity <= 1}
                                         >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -120,7 +130,8 @@ const Cart = ({ onCartUpdate }) => {
                                         <span className="quantity-value">{item.quantity}</span>
                                         <button
                                             className="quantity-btn"
-                                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                            // CRITICAL CHANGE: Pass item._id
+                                            onClick={() => updateQuantity(item._id, item.quantity + 1)}
                                             disabled={item.quantity >= item.product.stock}
                                         >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -136,7 +147,8 @@ const Cart = ({ onCartUpdate }) => {
 
                                     <button
                                         className="remove-btn"
-                                        onClick={() => removeItem(item.id)}
+                                        // CRITICAL CHANGE: Pass item._id
+                                        onClick={() => removeItem(item._id)}
                                     >
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <polyline points="3 6 5 6 21 6" />

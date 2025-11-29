@@ -13,7 +13,7 @@ const ProductCard = ({ product, onAddToCart }) => {
         e.stopPropagation();
         setIsAdding(true);
         try {
-            await cartService.addToCart(product.id);
+            await cartService.addToCart(product._id);
             setShowSuccess(true);
             if (onAddToCart) onAddToCart();
             setTimeout(() => setShowSuccess(false), 2000);
@@ -28,12 +28,12 @@ const ProductCard = ({ product, onAddToCart }) => {
     };
 
     const handleCardClick = () => {
-        navigate(`/product/${product.id}`);
+        navigate(`/product/${product._id}`);
     };
 
     const handleQuickView = (e) => {
         e.stopPropagation();
-        navigate(`/product/${product.id}`);
+        navigate(`/product/${product._id}`);
     };
 
     return (

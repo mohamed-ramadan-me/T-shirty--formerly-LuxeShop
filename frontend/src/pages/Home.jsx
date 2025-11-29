@@ -15,7 +15,10 @@ const Home = ({ onCartUpdate }) => {
     const loadFeaturedProducts = async () => {
         try {
             const response = await productService.getProducts({ sort: 'rating' });
-            setFeaturedProducts(response.products.slice(0, 6));
+            if (response.success) {
+                // Slice top 6 products
+                setFeaturedProducts(response.products.slice(0, 6));
+            }
         } catch (error) {
             console.error('Error loading products:', error);
         } finally {
@@ -30,13 +33,13 @@ const Home = ({ onCartUpdate }) => {
                 <div className="container">
                     <div className="hero-content animate-fade-in">
                         <h1 className="hero-title">
-                            Discover Premium
+                            Premium Quality
                             <br />
-                            <span className="gradient-text">Lifestyle Products</span>
+                            <span className="gradient-text">T-Shirts</span>
                         </h1>
                         <p className="hero-subtitle">
-                            Experience luxury shopping with our curated collection of high-quality products.
-                            From electronics to fashion, find everything you need in one place.
+                            Discover our exclusive collection of premium t-shirts in vibrant colors and comfortable styles.
+                            From basic essentials to premium designs, find your perfect fit.
                         </p>
                         <div className="hero-actions">
                             <Link to="/products" className="btn btn-primary btn-lg">
@@ -44,24 +47,21 @@ const Home = ({ onCartUpdate }) => {
                                     <circle cx="11" cy="11" r="8" />
                                     <path d="m21 21-4.35-4.35" />
                                 </svg>
-                                Explore Products
-                            </Link>
-                            <Link to="/products?category=Electronics" className="btn btn-outline btn-lg">
-                                Shop Electronics
+                                Shop All T-Shirts
                             </Link>
                         </div>
 
                         <div className="hero-stats">
                             <div className="stat-item">
-                                <div className="stat-value">1000+</div>
-                                <div className="stat-label">Products</div>
+                                <div className="stat-value">12+</div>
+                                <div className="stat-label">Unique Styles</div>
                             </div>
                             <div className="stat-item">
-                                <div className="stat-value">50K+</div>
+                                <div className="stat-value">5K+</div>
                                 <div className="stat-label">Happy Customers</div>
                             </div>
                             <div className="stat-item">
-                                <div className="stat-value">4.8★</div>
+                                <div className="stat-value">4.7★</div>
                                 <div className="stat-label">Average Rating</div>
                             </div>
                         </div>
@@ -70,28 +70,28 @@ const Home = ({ onCartUpdate }) => {
                     <div className="hero-visual animate-scale-in">
                         <div className="floating-card card-1">
                             <div className="mini-product">
-                                <div className="mini-product-icon">🎧</div>
+                                <div className="mini-product-icon">👕</div>
                                 <div className="mini-product-info">
-                                    <div className="mini-product-name">Headphones</div>
-                                    <div className="mini-product-price">$299</div>
+                                    <div className="mini-product-name">Classic T-Shirt</div>
+                                    <div className="mini-product-price">$19.99</div>
                                 </div>
                             </div>
                         </div>
                         <div className="floating-card card-2">
                             <div className="mini-product">
-                                <div className="mini-product-icon">⌚</div>
+                                <div className="mini-product-icon">👔</div>
                                 <div className="mini-product-info">
-                                    <div className="mini-product-name">Smart Watch</div>
-                                    <div className="mini-product-price">$399</div>
+                                    <div className="mini-product-name">Premium T-Shirt</div>
+                                    <div className="mini-product-price">$25.99</div>
                                 </div>
                             </div>
                         </div>
                         <div className="floating-card card-3">
                             <div className="mini-product">
-                                <div className="mini-product-icon">👟</div>
+                                <div className="mini-product-icon">🎨</div>
                                 <div className="mini-product-info">
-                                    <div className="mini-product-name">Running Shoes</div>
-                                    <div className="mini-product-price">$149</div>
+                                    <div className="mini-product-name">Graphic T-Shirt</div>
+                                    <div className="mini-product-price">$22.99</div>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,12 @@ const Home = ({ onCartUpdate }) => {
                     ) : (
                         <div className="grid grid-3">
                             {featuredProducts.map((product) => (
-                                <ProductCard key={product.id} product={product} onAddToCart={onCartUpdate} />
+                                // CRITICAL CHANGE: Use product._id here
+                                <ProductCard 
+                                    key={product._id} 
+                                    product={product} 
+                                    onAddToCart={onCartUpdate} 
+                                />
                             ))}
                         </div>
                     )}

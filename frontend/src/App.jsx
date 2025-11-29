@@ -26,8 +26,11 @@ function App() {
   const updateCartCount = async () => {
     try {
       const response = await cartService.getCart();
-      const count = response.cart.reduce((sum, item) => sum + item.quantity, 0);
-      setCartCount(count);
+      // FIX: Check for success before reducing
+      if (response.success && response.cart) {
+        const count = response.cart.reduce((sum, item) => sum + item.quantity, 0);
+        setCartCount(count);
+      }
     } catch (error) {
       console.error('Error updating cart count:', error);
     }
@@ -50,6 +53,7 @@ function App() {
             <Route path="/products" element={<Products onCartUpdate={updateCartCount} />} />
             <Route path="/product/:id" element={<ProductDetail onCartUpdate={updateCartCount} />} />
             <Route path="/login" element={<Auth />} />
+            
             <Route
               path="/cart"
               element={

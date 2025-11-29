@@ -18,7 +18,8 @@ const ProductDetail = ({ onCartUpdate }) => {
 
     const loadProduct = async () => {
         try {
-            const response = await productService.getProduct(parseInt(id));
+            // CRITICAL CHANGE: Do NOT use parseInt(). MongoDB IDs are strings.
+            const response = await productService.getProduct(id);
             setProduct(response.product);
         } catch (error) {
             console.error('Error loading product:', error);
@@ -30,12 +31,14 @@ const ProductDetail = ({ onCartUpdate }) => {
     const handleAddToCart = async () => {
         setIsAdding(true);
         try {
-            await cartService.addToCart(product.id, quantity);
+            // CRITICAL CHANGE: Use product._id
+            await cartService.addToCart(product._id, quantity);
+            
             if (onCartUpdate) onCartUpdate();
             navigate('/cart');
         } catch (error) {
             console.error('Error adding to cart:', error);
-            if (error.error === 'Authentication required') {
+            if (error.error === 'Authentication required' || error.error === 'Auth required') {
                 navigate('/login');
             }
         } finally {

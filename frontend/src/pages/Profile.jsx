@@ -14,27 +14,29 @@ const Profile = () => {
             navigate('/login');
             return;
         }
-        loadProfile();
-        loadOrders();
+        loadData();
     }, [navigate]);
 
-    const loadProfile = async () => {
+    const loadData = async () => {
+        setLoading(true);
         try {
-            const response = await profileService.getUserProfile();
-            setProfile(response.profile);
+            // Load profile and orders in parallel
+            const [profileRes, ordersRes] = await Promise.all([
+                profileService.getUserProfile(),
+                orderService.getOrders()
+            ]);
+
+            if (profileRes.success) {
+                setProfile(profileRes.profile);
+            }
+            
+            if (ordersRes.success) {
+                setOrders(ordersRes.orders);
+            }
         } catch (error) {
-            console.error('Error loading profile:', error);
+            console.error('Error loading profile data:', error);
         } finally {
             setLoading(false);
-        }
-    };
-
-    const loadOrders = async () => {
-        try {
-            const response = await orderService.getOrders();
-            setOrders(response.orders);
-        } catch (error) {
-            console.error('Error loading orders:', error);
         }
     };
 
@@ -42,7 +44,7 @@ const Profile = () => {
         return (
             <div className="profile-page">
                 <div className="container">
-                    <div className="skeleton" style={{ height: '400px' }}></div>
+                    <div className="skeleton" style={{ height: '400px' }}>Loading Profile...</div>
                 </div>
             </div>
         );
@@ -71,11 +73,11 @@ const Profile = () => {
                             <div className="profile-meta">
                                 <p>Member since</p>
                                 <p className="meta-value">
-                                    {new Date(profile?.createdAt).toLocaleDateString('en-US', {
+                                    {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric'
-                                    })}
+                                    }) : 'N/A'}
                                 </p>
                             </div>
                         </div>
@@ -99,14 +101,15 @@ const Profile = () => {
                                 </div>
                                 <div className="info-item">
                                     <label>User ID</label>
-                                    <p>#{profile?.id}</p>
+                                    {/* CRITICAL CHANGE: Use _id for MongoDB */}
+                                    <p className="id-text">#{profile?._id}</p>
                                 </div>
                             </div>
                         </div>
 
                         <div className="profile-section card glass">
                             <h3>Order History</h3>
-                            {orders.length > 0 ? (
+                            {orders && orders.length > 0 ? (
                                 <div className="orders-summary">
                                     <div className="summary-stat">
                                         <div className="summary-value">{orders.length}</div>
@@ -114,7 +117,7 @@ const Profile = () => {
                                     </div>
                                     <div className="summary-stat">
                                         <div className="summary-value">
-                                            ${orders.reduce((sum, order) => sum + order.total, 0).toFixed(2)}
+                                            ${orders.reduce((sum, order) => sum + (order.total || 0), 0).toFixed(2)}
                                         </div>
                                         <div className="summary-label">Total Spent</div>
                                     </div>

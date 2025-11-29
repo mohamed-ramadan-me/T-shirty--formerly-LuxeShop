@@ -24,7 +24,9 @@ const Products = ({ onCartUpdate }) => {
     const loadCategories = async () => {
         try {
             const response = await productService.getCategories();
-            setCategories(response.categories);
+            if (response.success) {
+                setCategories(response.categories);
+            }
         } catch (error) {
             console.error('Error loading categories:', error);
         }
@@ -34,7 +36,11 @@ const Products = ({ onCartUpdate }) => {
         setLoading(true);
         try {
             const response = await productService.getProducts(filters);
-            setProducts(response.products);
+            if (response.success) {
+                setProducts(response.products);
+            } else {
+                setProducts([]); // Fallback to empty array on error
+            }
         } catch (error) {
             console.error('Error loading products:', error);
         } finally {
@@ -135,7 +141,12 @@ const Products = ({ onCartUpdate }) => {
                 ) : (
                     <div className="grid grid-4 products-grid">
                         {products.map((product) => (
-                            <ProductCard key={product.id} product={product} onAddToCart={onCartUpdate} />
+                            // CRITICAL CHANGE: Use product._id here
+                            <ProductCard 
+                                key={product._id} 
+                                product={product} 
+                                onAddToCart={onCartUpdate} 
+                            />
                         ))}
                     </div>
                 )}

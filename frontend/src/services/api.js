@@ -1,10 +1,12 @@
 import axios from 'axios';
 
+// Ensure this matches your backend port
 const API_URL = 'http://localhost:5000/api';
+const BASE_URL = 'http://localhost:5000';
 
 // Create axios instance
 const api = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -22,10 +24,20 @@ api.interceptors.request.use((config) => {
 // Single API call function
 const callAPI = async (action, data = {}) => {
     try {
+        // This matches the unified endpoint structure: { action, data }
         const response = await api.post('/api', { action, data });
+        
+        // Return the whole response (success, data, error)
         return response.data;
     } catch (error) {
-        throw error.response?.data || { error: 'Network error' };
+        console.error(`API Error (${action}):`, error);
+        
+        // Handle Axios errors (4xx, 5xx) vs Network errors
+        if (error.response && error.response.data) {
+             // Return the error message from backend so UI can show it
+            return { success: false, error: error.response.data.error };
+        }
+        return { success: false, error: 'Network error or server unreachable' };
     }
 };
 
@@ -49,7 +61,7 @@ export const authService = {
 // Product Services
 export const productService = {
     getProducts: (filters = {}) => callAPI('getProducts', filters),
-    getProduct: (id) => callAPI('getProduct', { id }),
+    getProduct: (id) => callAPI('getProduct', { id }), // Ensure 'id' here is the MongoDB _id string
     getCategories: () => callAPI('getCategories'),
 };
 
@@ -57,6 +69,7 @@ export const productService = {
 export const cartService = {
     getCart: () => callAPI('getCart'),
     addToCart: (productId, quantity = 1) => callAPI('addToCart', { productId, quantity }),
+    // Important: cartItemId is now the MongoDB _id of the cart entry
     updateCartItem: (cartItemId, quantity) => callAPI('updateCartItem', { cartItemId, quantity }),
     removeFromCart: (cartItemId) => callAPI('removeFromCart', { cartItemId }),
 };

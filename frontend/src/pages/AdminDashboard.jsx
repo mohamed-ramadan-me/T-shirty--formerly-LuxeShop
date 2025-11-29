@@ -40,7 +40,9 @@ const AdminDashboard = () => {
     const loadDashboardStats = async () => {
         try {
             const response = await adminService.getDashboardStats();
-            setStats(response.stats);
+            if (response.success) {
+                setStats(response.stats);
+            }
         } catch (error) {
             console.error('Error loading dashboard:', error);
         } finally {
@@ -74,6 +76,7 @@ const AdminDashboard = () => {
 
     const handleUpdateOrderStatus = async (orderId, newStatus) => {
         try {
+            // Updated to use the correct service call
             await adminService.updateOrderStatus(orderId, newStatus);
             // Refresh orders
             loadAllOrders();
@@ -91,7 +94,13 @@ const AdminDashboard = () => {
 
     const handleSaveProduct = async () => {
         try {
-            await adminService.updateProduct(editingProduct);
+            // IMPORTANT: Map _id to id for the backend
+            const payload = {
+                ...editingProduct,
+                id: editingProduct._id 
+            };
+            
+            await adminService.updateProduct(payload);
             setShowEditModal(false);
             setEditingProduct(null);
             loadAllProducts();
@@ -121,7 +130,7 @@ const AdminDashboard = () => {
         return (
             <div className="admin-dashboard">
                 <div className="container">
-                    <div className="skeleton" style={{ height: '400px' }}></div>
+                    <div className="skeleton" style={{ height: '400px' }}>Loading Dashboard...</div>
                 </div>
             </div>
         );
@@ -160,12 +169,7 @@ const AdminDashboard = () => {
                     <div className="dashboard-content animate-fade-in">
                         <div className="stats-grid">
                             <div className="stat-card card glass">
-                                <div className="stat-icon revenue">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <line x1="12" y1="1" x2="12" y2="23" />
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                                    </svg>
-                                </div>
+                                <div className="stat-icon revenue">💰</div>
                                 <div className="stat-info">
                                     <div className="stat-label">Total Revenue</div>
                                     <div className="stat-value">${stats?.totalRevenue?.toFixed(2) || '0.00'}</div>
@@ -173,11 +177,7 @@ const AdminDashboard = () => {
                             </div>
 
                             <div className="stat-card card glass">
-                                <div className="stat-icon orders">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                    </svg>
-                                </div>
+                                <div className="stat-icon orders">📦</div>
                                 <div className="stat-info">
                                     <div className="stat-label">Total Orders</div>
                                     <div className="stat-value">{stats?.totalOrders || 0}</div>
@@ -185,14 +185,7 @@ const AdminDashboard = () => {
                             </div>
 
                             <div className="stat-card card glass">
-                                <div className="stat-icon users">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    </svg>
-                                </div>
+                                <div className="stat-icon users">👥</div>
                                 <div className="stat-info">
                                     <div className="stat-label">Total Users</div>
                                     <div className="stat-value">{stats?.totalUsers || 0}</div>
@@ -200,13 +193,7 @@ const AdminDashboard = () => {
                             </div>
 
                             <div className="stat-card card glass">
-                                <div className="stat-icon products">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                                        <line x1="12" y1="22.08" x2="12" y2="12" />
-                                    </svg>
-                                </div>
+                                <div className="stat-icon products">👕</div>
                                 <div className="stat-info">
                                     <div className="stat-label">Total Products</div>
                                     <div className="stat-value">{stats?.totalProducts || 0}</div>
@@ -216,13 +203,8 @@ const AdminDashboard = () => {
 
                         {stats?.lowStockProducts > 0 && (
                             <div className="alert-card card">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                                    <line x1="12" y1="9" x2="12" y2="13" />
-                                    <line x1="12" y1="17" x2="12.01" y2="17" />
-                                </svg>
                                 <div>
-                                    <strong>Low Stock Alert!</strong>
+                                    <strong>⚠️ Low Stock Alert!</strong>
                                     <p>{stats.lowStockProducts} products have low stock (less than 20 units)</p>
                                 </div>
                             </div>
@@ -244,8 +226,8 @@ const AdminDashboard = () => {
                                         </thead>
                                         <tbody>
                                             {stats.recentOrders.map((order) => (
-                                                <tr key={order.id}>
-                                                    <td>#{order.id}</td>
+                                                <tr key={order._id}>
+                                                    <td>#{order._id.slice(-6)}</td>
                                                     <td>{order.items.length} items</td>
                                                     <td>${order.total.toFixed(2)}</td>
                                                     <td><span className={`status-badge badge-${order.status.toLowerCase()}`}>{order.status}</span></td>
@@ -256,25 +238,6 @@ const AdminDashboard = () => {
                                     </table>
                                 ) : (
                                     <p className="empty-message">No orders yet</p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="dashboard-section">
-                            <h2>Top Selling Products</h2>
-                            <div className="top-products-grid">
-                                {stats?.topProducts?.length > 0 ? (
-                                    stats.topProducts.map((product, index) => (
-                                        <div key={index} className="top-product-card card glass">
-                                            <img src={product.image} alt={product.name} />
-                                            <div className="top-product-info">
-                                                <h4>{product.name}</h4>
-                                                <p className="sold-count">{product.totalSold} sold</p>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="empty-message">No sales data yet</p>
                                 )}
                             </div>
                         </div>
@@ -318,9 +281,9 @@ const AdminDashboard = () => {
                                         </thead>
                                         <tbody>
                                             {getFilteredOrders().map((order) => (
-                                                <tr key={order.id}>
-                                                    <td><strong>#{order.id}</strong></td>
-                                                    <td>User #{order.userId}</td>
+                                                <tr key={order._id}>
+                                                    <td><strong>#{order._id.slice(-6)}</strong></td>
+                                                    <td>User #{order.userId ? order.userId.slice(-4) : 'Unknown'}</td>
                                                     <td>
                                                         <div className="order-items-preview">
                                                             {order.items.slice(0, 2).map((item, idx) => (
@@ -335,7 +298,7 @@ const AdminDashboard = () => {
                                                     <td>
                                                         <select
                                                             value={order.status}
-                                                            onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
+                                                            onChange={(e) => handleUpdateOrderStatus(order._id, e.target.value)}
                                                             className={`status-select status-${order.status.toLowerCase()}`}
                                                         >
                                                             <option value="Processing">Processing</option>
@@ -361,7 +324,6 @@ const AdminDashboard = () => {
                     <div className="dashboard-content animate-fade-in">
                         <div className="management-header">
                             <h2>Products Management</h2>
-                            <p className="subtitle">Manage your product catalog</p>
                         </div>
 
                         {productsLoading ? (
@@ -369,7 +331,7 @@ const AdminDashboard = () => {
                         ) : (
                             <div className="products-grid">
                                 {allProducts.map((product) => (
-                                    <div key={product.id} className="product-management-card card glass">
+                                    <div key={product._id} className="product-management-card card glass">
                                         <img src={product.image} alt={product.name} className="product-img" />
                                         <div className="product-details">
                                             <h3>{product.name}</h3>
@@ -388,10 +350,6 @@ const AdminDashboard = () => {
                                                 className="btn btn-primary btn-edit"
                                                 onClick={() => handleEditProduct(product)}
                                             >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                                </svg>
                                                 Edit Product
                                             </button>
                                         </div>
@@ -409,12 +367,7 @@ const AdminDashboard = () => {
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h2>Edit Product</h2>
-                            <button className="modal-close" onClick={() => setShowEditModal(false)}>
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                </svg>
-                            </button>
+                            <button className="modal-close" onClick={() => setShowEditModal(false)}>✕</button>
                         </div>
                         <div className="modal-body">
                             <div className="form-group">
@@ -463,11 +416,8 @@ const AdminDashboard = () => {
                                     value={editingProduct.category}
                                     onChange={(e) => handleProductInputChange('category', e.target.value)}
                                 >
-                                    <option value="Electronics">Electronics</option>
-                                    <option value="Fashion">Fashion</option>
-                                    <option value="Sports">Sports</option>
-                                    <option value="Home">Home</option>
-                                    <option value="Accessories">Accessories</option>
+                                    <option value="Basic">Basic</option>
+                                    <option value="Premium">Premium</option>
                                 </select>
                             </div>
                             <div className="form-group">
